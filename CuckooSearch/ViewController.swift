@@ -12,14 +12,20 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        let cuckooSearchBrain = CuckooSearchBrain()
+        cuckooSearchBrain.delegate = self
+        cuckooSearchBrain.searchBest()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
 
+extension ViewController: CuckooSearchBrainDelegate {
+    
+    func newGenerationSimulated(cuckooSearchBrain: CuckooSearchBrain, currentBest: Egg?, utility: Double?) {
+        guard let bestValues = currentBest?.values else { return }
+        guard let utility = utility else { return }
+        
+        print("best solution values: \(bestValues)")
+        print("best solution utility: \(utility)")
+    }
+}
