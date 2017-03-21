@@ -10,27 +10,19 @@ import UIKit
 import BEMSimpleLineGraph
 
 class ViewController: UIViewController {
+    
+    let cuckooSearchBrain = CuckooSearchBrain()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupCuckooSearch()
+        performCuckooSearch()
     }
     
-    private func setupCuckooSearch() {
-        let cuckooSearchBrain = CuckooSearchBrain()
-        cuckooSearchBrain.delegate = self
-        cuckooSearchBrain.searchBest()
+    private func performCuckooSearch() {
+        cuckooSearchBrain.performSearch { 
+            
+        }
     }
-}
 
-extension ViewController: CuckooSearchBrainDelegate {
-    
-    func newGenerationSimulated(cuckooSearchBrain: CuckooSearchBrain, currentBest: Egg?, utility: Double?) {
-        guard let bestValues = currentBest?.values else { return }
-        guard let utility = utility else { return }
-        
-        print("best solution values: \(bestValues)")
-        print("best solution utility: \(utility)")
-    }
 }

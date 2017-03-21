@@ -8,10 +8,6 @@
 
 import Foundation
 
-protocol CuckooSearchBrainDelegate: class {
-    func newGenerationSimulated(cuckooSearchBrain: CuckooSearchBrain, currentBest: Egg?, utility: Double?)
-}
-
 class CuckooSearchBrain {
     
     // TODO: when solving an economic function, set constraints
@@ -21,8 +17,8 @@ class CuckooSearchBrain {
         1) One egg per nest
         2) One egg per cuckoo
      */
-    
-    weak var delegate: CuckooSearchBrainDelegate?
+
+    private(set) var bestSolutionEggs: [Egg]?
     
     /* ---------------------------------------------------------------- */
     /* -------------------------- CONFIGURABLE ------------------------ */
@@ -37,7 +33,7 @@ class CuckooSearchBrain {
         static let variablesCount = 2
     }
     
-    private func utility(egg: Egg) -> Double {
+    fileprivate static func utility(egg: Egg) -> Double {
         guard egg.values.count == Config.variablesCount else {
             fatalError("Given Egg has no valid variables count")
         }
@@ -60,23 +56,27 @@ class CuckooSearchBrain {
     /* ---------------------------------------------------------------- */
     /* ---------------------------------------------------------------- */
     
-    func searchBest() {
+    func performSearch(completion: () -> ()) {
+        // reset best solution eggs
+        self.bestSolutionEggs = nil
+        
         // generate initial population of host nests and cuckoos
         var nests = generateInitialNests()
         var cuckoos = generateInitialCuckoos()
         
+        var bestSolutionEggs = [Egg]()
         for _ in 0..<Config.generationCount {
             // get random cuckoo
             let randomCuckooIndex = Int(arc4random_uniform(UInt32(cuckoos.count)))
             var randomCuckoo = cuckoos[randomCuckooIndex]
             // replace egg with levy flights
             randomCuckoo.egg = generateStepSizeEgg(egg: randomCuckoo.egg)
-            let randomCuckooEggUtility = utility(egg: randomCuckoo.egg)
+            let randomCuckooEggUtility = CuckooSearchBrain.utility(egg: randomCuckoo.egg)
             
             // get random nest
             let randomNestIndex = Int(arc4random_uniform(UInt32(nests.count)))
             let randomNest = nests[randomNestIndex]
-            let randomNestEggUtility = utility(egg: randomNest.egg)
+            let randomNestEggUtility = CuckooSearchBrain.utility(egg: randomNest.egg)
             
             if randomCuckooEggUtility > randomNestEggUtility {
                 // replace nest egg with cuckoo egg
@@ -87,10 +87,17 @@ class CuckooSearchBrain {
             nests = nestsAfterAbandoningFraction(fraction: Config.nestsToAbandonFraction, nests: nests)
             
             // report best solution egg via delegate
-            let bestSolutionEgg = nests.first?.egg
-            let bestSolutionUtility = bestSolutionEgg != nil ? utility(egg: bestSolutionEgg!) : nil
-            delegate?.newGenerationSimulated(cuckooSearchBrain: self, currentBest: bestSolutionEgg, utility: bestSolutionUtility)
+            guard let bestSolutionEgg = nests.first?.egg else {
+                print("Could not find best solution")
+                completion()
+                return
+            }
+            
+            bestSolutionEggs.append(bestSolutionEgg)
         }
+        
+        self.bestSolutionEggs = bestSolutionEggs
+        completion()
     }
     
     private func generateInitialNests() -> [Nest]  {
@@ -182,5 +189,9 @@ struct Egg {
     
     init(values: [Double]) {
         self.values = values
+    }
+    
+    var utility: Double {
+        return CuckooSearchBrain.utility(egg: self)
     }
 }
