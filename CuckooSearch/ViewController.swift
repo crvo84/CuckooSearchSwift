@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import BEMSimpleLineGraph
 
 class ViewController: UIViewController {
 
