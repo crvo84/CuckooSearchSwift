@@ -13,15 +13,18 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var graphView: BEMSimpleLineGraphView!
 
+    @IBOutlet weak var searchButton: UIButton!
+
     fileprivate let cuckooSearchBrain = CuckooSearchBrain()
     
-    fileprivate var isSearching = false
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupGraph()
-        performCuckooSearch()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        performCuckooSearch(self)
     }
     
     private func setupGraph() {
@@ -45,27 +48,15 @@ class ViewController: UIViewController {
         graphView?.colorYaxisLabel = UIColor.white
         graphView?.colorXaxisLabel = UIColor.white
     }
-
-    private func performCuckooSearch() {
+    
+    @IBAction func performCuckooSearch(_ sender: Any) {
+        searchButton.isEnabled = false
         
-        activityIndicator.startAnimating()
-        view.isUserInteractionEnabled = false
-        isSearching = true
-
-        cuckooSearchBrain.performSearch {
+        cuckooSearchBrain.performSearch { [weak self] in
             
-            activityIndicator.stopAnimating()
-            view.isUserInteractionEnabled = true
-            isSearching = false
-            
-            graphView?.reloadGraph()
+            self?.graphView?.reloadGraph()
+            self?.searchButton.isEnabled = true
         }
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard !isSearching else { return }
-        
-        performCuckooSearch()
     }
 }
 
