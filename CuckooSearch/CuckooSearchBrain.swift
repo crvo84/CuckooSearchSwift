@@ -11,6 +11,10 @@ import Foundation
 class CuckooSearchBrain {
     
     // TODO: when solving an economic function, set constraints
+    /* 
+        Constraints can be set by modifying randomMax with the value that corresponds assigning
+        all the budget to that product/variable
+     */
     
     /* 
      Assumptions:
@@ -23,9 +27,14 @@ class CuckooSearchBrain {
     /* ---------------------------------------------------------------- */
     /* -------------------------- CONFIGURABLE ------------------------ */
     /* ---------------------------------------------------------------- */
+    // More Cuckoos allows you to search in new places, to avoid local maximums
+    /* 
+      10-10 best result
+      10-100 fast to find best, but far from optimum
+     */
     private struct Config {
-        static let nestCount = 100
-        static let cuckooCount = 100
+        static let nestCount = 10
+        static let cuckooCount = 10
         static let generationCount = 10000
         static let nestsToAbandonFraction = 0.5
         static let randomMin = 0
