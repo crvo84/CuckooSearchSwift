@@ -33,7 +33,7 @@ class CuckooSearchBrain {
         static let generationCount = 1000
         static let nestsToAbandonFraction = 0.5
         static let randomMin = 0
-        static let randomMax = 1000
+        static let randomMax = 100
         static let variablesCount = 2
     }
     
@@ -146,7 +146,14 @@ class CuckooSearchBrain {
         var valuesPlusStep = [Double]()
         
         for i in 0..<Config.variablesCount {
-            let step = arc4random_uniform(2) == 0 ? -1.0 : 1.0
+            var step: Double
+            
+            switch arc4random_uniform(3) {
+            case 0: step = -1.0
+            case 1: step = +1.0
+            default: step = +0.0
+            }
+            
             valuesPlusStep.append(egg.values[i] + step)
         }
 
