@@ -55,17 +55,19 @@ class ViewController: UIViewController {
         isSearching = true
         cuckooSearchBrain.performSearch { [weak self] in
             
-            if let lastEgg = self?.cuckooSearchBrain.bestSolutionEggs?.last {
-                self?.updateResultLabel(egg: lastEgg)
+            if
+                let bestSolutionEggs = self?.cuckooSearchBrain.bestSolutionEggs,
+                let lastEgg = bestSolutionEggs.last {
+                    self?.updateResultLabel(egg: lastEgg, generation: bestSolutionEggs.count)
             }
             
             self?.graphView?.reloadGraph()
         }
     }
     
-    fileprivate func updateResultLabel(egg: Egg) {
+    fileprivate func updateResultLabel(egg: Egg, generation: Int) {
         let intValues = egg.values.map { Int($0) }
-        resultLabel?.text = "\(intValues)"
+        resultLabel?.text = "\(intValues)   t = \(generation)"
     }
 }
 
@@ -100,13 +102,15 @@ extension ViewController: BEMSimpleLineGraphDelegate {
     
     func lineGraph(_ graph: BEMSimpleLineGraphView, didTouchGraphWithClosestIndex index: Int) {
         if let egg = cuckooSearchBrain.bestSolutionEggs?[index] {
-            updateResultLabel(egg: egg)
+            updateResultLabel(egg: egg, generation: index + 1)
         }
     }
     
     func lineGraph(_ graph: BEMSimpleLineGraphView, didReleaseTouchFromGraphWithClosestIndex index: CGFloat) {
-        if let lastEgg = cuckooSearchBrain.bestSolutionEggs?.last {
-            updateResultLabel(egg: lastEgg)
+        if
+            let bestSolutionEggs = cuckooSearchBrain.bestSolutionEggs,
+            let lastEgg = bestSolutionEggs.last {
+                updateResultLabel(egg: lastEgg, generation: bestSolutionEggs.count)
         }
     }
 }

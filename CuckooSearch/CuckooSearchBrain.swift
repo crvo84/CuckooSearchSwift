@@ -24,16 +24,10 @@ class CuckooSearchBrain {
 
     private(set) var bestSolutionEggs: [Egg]?
     
-    // Cuckoo search vars
-    var nestCount = 10
-    var cuckooCount = 10
-    var generationCount = 10000
-    var nestsToAbandonFraction = 0.5
-    
     // Function vars
-    var randomMin = 0
-    var randomMax = 1000
-    static let variablesCount = 2
+    static var productCount: Int {
+        return productMaxValues.count
+    }
     
     /* ---------------------------------------------------------------- */
     /* -------------------------- CONFIGURABLE ------------------------ */
@@ -44,9 +38,17 @@ class CuckooSearchBrain {
       10-100 fast to find best, but far from optimum
      */
     
+    // Cuckoo search vars
+    var nestCount = 10
+    var cuckooCount = 10
+    var generationCount = 10000
+    var nestsToAbandonFraction = 0.5
+    
+    static let productMaxValues: [Double] = [20, 20] // c/ product se multiplica por un precio
+    
     fileprivate static func utility(egg: Egg) -> Double {
-        guard egg.values.count == variablesCount else {
-            fatalError("Given Egg has no valid variables count")
+        guard egg.values.count == productCount else {
+            fatalError("Given Egg has no valid product count")
         }
         
         /*
@@ -85,7 +87,7 @@ class CuckooSearchBrain {
             let randomCuckooIndex = Int(arc4random_uniform(UInt32(cuckoos.count)))
             var randomCuckoo = cuckoos[randomCuckooIndex]
             // replace egg with levy flights
-            randomCuckoo.egg = generateStepSizeEgg(egg: randomCuckoo.egg)
+            randomCuckoo.egg = CuckooSearchBrain.generateStepSizeEgg(egg: randomCuckoo.egg)
             let randomCuckooEggUtility = CuckooSearchBrain.utility(egg: randomCuckoo.egg)
             
             // get random nest
@@ -99,7 +101,7 @@ class CuckooSearchBrain {
             }
             
             // Abandon worst nests (amount determined by Config fraction)
-            nests = nestsAfterAbandoningFraction(fraction: nestsToAbandonFraction, nests: nests)
+            nests = CuckooSearchBrain.nestsAfterAbandoningFraction(fraction: nestsToAbandonFraction, nests: nests)
             
             // report best solution egg via delegate
             guard let bestSolutionEgg = nests.first?.egg else {
@@ -118,7 +120,7 @@ class CuckooSearchBrain {
     private func generateInitialNests() -> [Nest]  {
         var nests = [Nest]()
         for _ in 0..<nestCount {
-            let newNest = Nest(egg: generateRandomEgg())
+            let newNest = Nest(egg: CuckooSearchBrain.generateRandomEgg())
             nests.append(newNest)
         }
         
@@ -128,14 +130,14 @@ class CuckooSearchBrain {
     private func generateInitialCuckoos() -> [Cuckoo] {
         var cuckoos = [Cuckoo]()
         for _ in 0..<cuckooCount {
-            let newCuckoo = Cuckoo(egg: generateRandomEgg())
+            let newCuckoo = Cuckoo(egg: CuckooSearchBrain.generateRandomEgg())
             cuckoos.append(newCuckoo)
         }
         
         return cuckoos
     }
     
-    private func nestsAfterAbandoningFraction(fraction: Double, nests: [Nest]) -> [Nest] {
+    private static func nestsAfterAbandoningFraction(fraction: Double, nests: [Nest]) -> [Nest] {
         let validFraction = max(min(fraction, 1.0), 0.0)
         let originalNests = nests
         
@@ -153,10 +155,10 @@ class CuckooSearchBrain {
         return sortedNests
     }
     
-    private func generateRandomEgg() -> Egg {
+    private static func generateRandomEgg() -> Egg {
         var values = [Double]()
-        for _ in 0..<CuckooSearchBrain.variablesCount {
-            let upperBoundNotIncluded = UInt32(randomMax + 1) // zero included
+        for i in 0..<CuckooSearchBrain.productCount {
+            let upperBoundNotIncluded = UInt32(productMaxValues[i] + 1) // zero included
             let value = Double(arc4random_uniform(upperBoundNotIncluded))
             values.append(value)
         }
@@ -164,22 +166,28 @@ class CuckooSearchBrain {
         return Egg(values: values)
     }
     
-    private func generateStepSizeEgg(egg: Egg) -> Egg {
+    private static func generateStepSizeEgg(egg: Egg) -> Egg {
         var valuesPlusStep = [Double]()
         
-        for i in 0..<CuckooSearchBrain.variablesCount {
-            var step: Double
+        for i in 0..<CuckooSearchBrain.productCount {
+            let step = getRandomStep()
             
-            switch arc4random_uniform(3) {
-            case 0: step = -1.0
-            case 1: step = +1.0
-            default: step = +0.0
-            }
+            let oldValue = egg.values[i]
+            let oldValuePlusStep = productMaxValues[i] + step
+            let newValue = max(min(oldValuePlusStep, oldValue), 0.0)
             
-            valuesPlusStep.append(egg.values[i] + step)
+            valuesPlusStep.append(newValue)
         }
 
         return Egg(values: valuesPlusStep)
+    }
+    
+    private static func getRandomStep() -> Double {
+        switch arc4random_uniform(3) {
+        case 0: return -1.0
+        case 1: return +1.0
+        default: return +0.0
+        }
     }
 }
 
