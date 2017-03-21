@@ -31,32 +31,46 @@
                                 </connections>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgj-fK-wBt">
-                                <rect key="frame" x="281.5" y="2" width="104" height="26"/>
+                                <rect key="frame" x="497" y="2" width="140" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="GZ9-3O-aej"/>
+                                </constraints>
                                 <state key="normal" title="Cuckoo Search"/>
                                 <connections>
                                     <action selector="performCuckooSearch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uWQ-2p-yQu"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[...]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="FEK-n8-VWf">
+                                <rect key="frame" x="30" y="4" width="459" height="22"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="1Pz-hE-dz5" firstAttribute="top" secondItem="FEK-n8-VWf" secondAttribute="bottom" constant="4" id="3Mp-SQ-AMR"/>
+                            <constraint firstItem="hgj-fK-wBt" firstAttribute="leading" relation="lessThanOrEqual" secondItem="FEK-n8-VWf" secondAttribute="trailing" constant="8" id="B9G-Zg-h23"/>
                             <constraint firstItem="hgj-fK-wBt" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="2" id="DT4-TI-u07"/>
                             <constraint firstItem="1Pz-hE-dz5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="30" id="GI0-qK-4V8"/>
                             <constraint firstAttribute="trailing" secondItem="1Pz-hE-dz5" secondAttribute="trailing" constant="40" id="LdQ-NB-Tkj"/>
-                            <constraint firstItem="hgj-fK-wBt" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="MRO-sT-YTi"/>
+                            <constraint firstItem="FEK-n8-VWf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="30" id="OhE-QL-w2e"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="1Pz-hE-dz5" secondAttribute="bottom" constant="20" id="QFa-eE-c1m"/>
                             <constraint firstItem="1Pz-hE-dz5" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="30" id="XvN-0S-CX8"/>
+                            <constraint firstItem="FEK-n8-VWf" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="4" id="byg-sx-7O5"/>
+                            <constraint firstAttribute="trailing" secondItem="hgj-fK-wBt" secondAttribute="trailing" constant="30" id="fVU-9Q-FJm"/>
                             <constraint firstItem="1Pz-hE-dz5" firstAttribute="top" secondItem="hgj-fK-wBt" secondAttribute="bottom" constant="2" id="rMQ-gA-bAr"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="graphView" destination="1Pz-hE-dz5" id="tiM-an-FbM"/>
+                        <outlet property="resultLabel" destination="FEK-n8-VWf" id="O3p-SO-FqV"/>
                         <outlet property="searchButton" destination="hgj-fK-wBt" id="h5Q-vw-P9q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
+            <point key="canvasLocation" x="136.28185907046478" y="138.40000000000001"/>
         </scene>
     </scenes>
 </document>

@@ -26,7 +26,7 @@ class CuckooSearchBrain {
     private struct Config {
         static let nestCount = 100
         static let cuckooCount = 100
-        static let generationCount = 1000
+        static let generationCount = 10000
         static let nestsToAbandonFraction = 0.5
         static let randomMin = 0
         static let randomMax = 1000

@@ -15,23 +15,23 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var searchButton: UIButton!
 
+    @IBOutlet weak var resultLabel: UILabel!
+    
     fileprivate let cuckooSearchBrain = CuckooSearchBrain()
     
+    fileprivate var isSearching = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupGraph()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        performCuckooSearch(self)
-    }
-    
     private func setupGraph() {
         graphView?.layer.cornerRadius = 8
         graphView?.layer.masksToBounds = true
         
-//        graphView.enableTouchReport = true
+        graphView.enableTouchReport = true
         graphView.enableYAxisLabel = true
         graphView.enableXAxisLabel = true
         graphView.autoScaleYAxis = true
@@ -50,13 +50,22 @@ class ViewController: UIViewController {
     }
     
     @IBAction func performCuckooSearch(_ sender: Any) {
-        searchButton.isEnabled = false
+        guard !isSearching else { return }
         
+        isSearching = true
         cuckooSearchBrain.performSearch { [weak self] in
             
+            if let lastEgg = self?.cuckooSearchBrain.bestSolutionEggs?.last {
+                self?.updateResultLabel(egg: lastEgg)
+            }
+            
             self?.graphView?.reloadGraph()
-            self?.searchButton.isEnabled = true
         }
+    }
+    
+    fileprivate func updateResultLabel(egg: Egg) {
+        let intValues = egg.values.map { Int($0) }
+        resultLabel?.text = "\(intValues)"
     }
 }
 
@@ -73,6 +82,31 @@ extension ViewController: BEMSimpleLineGraphDataSource {
 }
 
 extension ViewController: BEMSimpleLineGraphDelegate {
-
+    func lineGraphDidFinishDrawing(_ graph: BEMSimpleLineGraphView) {
+        isSearching = false
+    }
     
+    func lineGraph(_ graph: BEMSimpleLineGraphView, labelOnXAxisFor index: Int) -> String! {
+        return "\(index)"
+    }
+    
+    func numberOfGapsBetweenLabels(onLineGraph graph: BEMSimpleLineGraphView) -> Int {
+        guard let eggs = cuckooSearchBrain.bestSolutionEggs else { return 0 }
+        let numberOfLabels = 4
+        let num = numberOfLabels + 2 // labels are not shown at edges
+        
+        return (eggs.count - num) / (num - 1)
+    }
+    
+    func lineGraph(_ graph: BEMSimpleLineGraphView, didTouchGraphWithClosestIndex index: Int) {
+        if let egg = cuckooSearchBrain.bestSolutionEggs?[index] {
+            updateResultLabel(egg: egg)
+        }
+    }
+    
+    func lineGraph(_ graph: BEMSimpleLineGraphView, didReleaseTouchFromGraphWithClosestIndex index: CGFloat) {
+        if let lastEgg = cuckooSearchBrain.bestSolutionEggs?.last {
+            updateResultLabel(egg: lastEgg)
+        }
+    }
 }
