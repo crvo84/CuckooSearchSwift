@@ -13,6 +13,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupCuckooSearch()
+    }
+    
+    private func setupCuckooSearch() {
         let cuckooSearchBrain = CuckooSearchBrain()
         cuckooSearchBrain.delegate = self
         cuckooSearchBrain.searchBest()

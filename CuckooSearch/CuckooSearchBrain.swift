@@ -28,12 +28,12 @@ class CuckooSearchBrain {
     /* -------------------------- CONFIGURABLE ------------------------ */
     /* ---------------------------------------------------------------- */
     private struct Config {
-        static let nestCount = 10
-        static let cuckooCount = 10
-        static let generationCount = 1000
+        static let nestCount = 100
+        static let cuckooCount = 100
+        static let generationCount = 100000
         static let nestsToAbandonFraction = 0.5
         static let randomMin = 0
-        static let randomMax = 100
+        static let randomMax = 1000
         static let variablesCount = 2
     }
     

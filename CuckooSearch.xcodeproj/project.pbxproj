@@ -13,9 +13,11 @@
 		735D979A1E7F0E7C0096C66A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 735D97991E7F0E7C0096C66A /* Assets.xcassets */; };
 		735D979D1E7F0E7C0096C66A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 735D979B1E7F0E7C0096C66A /* LaunchScreen.storyboard */; };
 		735D97A51E7F0EA70096C66A /* CuckooSearchBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735D97A41E7F0EA70096C66A /* CuckooSearchBrain.swift */; };
+		F9B85BFC9AB15E4AB074F6C5 /* Pods_CuckooSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D080A374CC414F816809AE08 /* Pods_CuckooSearch.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		56CA2474D402B4E7B43CDBE9 /* Pods-CuckooSearch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CuckooSearch.release.xcconfig"; path = "Pods/Target Support Files/Pods-CuckooSearch/Pods-CuckooSearch.release.xcconfig"; sourceTree = "<group>"; };
 		735D978F1E7F0E7C0096C66A /* CuckooSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CuckooSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		735D97921E7F0E7C0096C66A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		735D97941E7F0E7C0096C66A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +26,8 @@
 		735D979C1E7F0E7C0096C66A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		735D979E1E7F0E7C0096C66A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		735D97A41E7F0EA70096C66A /* CuckooSearchBrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CuckooSearchBrain.swift; sourceTree = "<group>"; };
+		D080A374CC414F816809AE08 /* Pods_CuckooSearch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CuckooSearch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2147F3953A6E0268A70AEC4 /* Pods-CuckooSearch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CuckooSearch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CuckooSearch/Pods-CuckooSearch.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9B85BFC9AB15E4AB074F6C5 /* Pods_CuckooSearch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		27BFAC1AAA808FFA3DC149E6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E2147F3953A6E0268A70AEC4 /* Pods-CuckooSearch.debug.xcconfig */,
+				56CA2474D402B4E7B43CDBE9 /* Pods-CuckooSearch.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		31075F3F53BF05CDA248E081 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D080A374CC414F816809AE08 /* Pods_CuckooSearch.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		735D97861E7F0E7C0096C66A = {
 			isa = PBXGroup;
 			children = (
 				735D97911E7F0E7C0096C66A /* CuckooSearch */,
 				735D97901E7F0E7C0096C66A /* Products */,
+				27BFAC1AAA808FFA3DC149E6 /* Pods */,
+				31075F3F53BF05CDA248E081 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -82,9 +106,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 735D97A11E7F0E7C0096C66A /* Build configuration list for PBXNativeTarget "CuckooSearch" */;
 			buildPhases = (
+				8FE346FB35FAF6CAB0A21701 /* [CP] Check Pods Manifest.lock */,
 				735D978B1E7F0E7C0096C66A /* Sources */,
 				735D978C1E7F0E7C0096C66A /* Frameworks */,
 				735D978D1E7F0E7C0096C66A /* Resources */,
+				64CED797C95F9FD46DE64F18 /* [CP] Embed Pods Frameworks */,
+				15B254D90EC6FA1ABA9D1F40 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -142,6 +169,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		15B254D90EC6FA1ABA9D1F40 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CuckooSearch/Pods-CuckooSearch-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		64CED797C95F9FD46DE64F18 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CuckooSearch/Pods-CuckooSearch-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8FE346FB35FAF6CAB0A21701 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		735D978B1E7F0E7C0096C66A /* Sources */ = {
@@ -271,6 +346,7 @@
 		};
 		735D97A21E7F0E7C0096C66A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E2147F3953A6E0268A70AEC4 /* Pods-CuckooSearch.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9F26XL4W94;
@@ -284,6 +360,7 @@
 		};
 		735D97A31E7F0E7C0096C66A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 56CA2474D402B4E7B43CDBE9 /* Pods-CuckooSearch.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9F26XL4W94;
