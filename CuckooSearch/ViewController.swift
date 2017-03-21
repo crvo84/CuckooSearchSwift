@@ -12,8 +12,10 @@ import BEMSimpleLineGraph
 class ViewController: UIViewController {
 
     @IBOutlet weak var graphView: BEMSimpleLineGraphView!
-    
+
     fileprivate let cuckooSearchBrain = CuckooSearchBrain()
+    
+    fileprivate var isSearching = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,11 +47,26 @@ class ViewController: UIViewController {
     }
 
     private func performCuckooSearch() {
-        cuckooSearchBrain.performSearch { 
+        
+        activityIndicator.startAnimating()
+        view.isUserInteractionEnabled = false
+        isSearching = true
+
+        cuckooSearchBrain.performSearch {
+            
+            activityIndicator.stopAnimating()
+            view.isUserInteractionEnabled = true
+            isSearching = false
+            
             graphView?.reloadGraph()
         }
     }
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard !isSearching else { return }
+        
+        performCuckooSearch()
+    }
 }
 
 extension ViewController: BEMSimpleLineGraphDataSource {

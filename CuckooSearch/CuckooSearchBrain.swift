@@ -56,9 +56,13 @@ class CuckooSearchBrain {
     /* ---------------------------------------------------------------- */
     /* ---------------------------------------------------------------- */
     
+    func reset() {
+        self.bestSolutionEggs = nil
+    }
+    
     func performSearch(completion: () -> ()) {
         // reset best solution eggs
-        self.bestSolutionEggs = nil
+        reset()
         
         // generate initial population of host nests and cuckoos
         var nests = generateInitialNests()
