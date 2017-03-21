@@ -391,6 +391,7 @@
 				735D97A31E7F0E7C0096C66A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

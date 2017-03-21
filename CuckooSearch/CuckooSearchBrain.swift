@@ -26,7 +26,7 @@ class CuckooSearchBrain {
     private struct Config {
         static let nestCount = 100
         static let cuckooCount = 100
-        static let generationCount = 100000
+        static let generationCount = 1000
         static let nestsToAbandonFraction = 0.5
         static let randomMin = 0
         static let randomMax = 1000
@@ -127,7 +127,7 @@ class CuckooSearchBrain {
         let abandonCount = Int(ceil(Double(originalNests.count) * validFraction))
         
         var sortedNests = originalNests.sorted { (lhs, rhs) -> Bool in
-            return utility(egg: lhs.egg) > utility(egg: rhs.egg)
+            return CuckooSearchBrain.utility(egg: lhs.egg) > CuckooSearchBrain.utility(egg: rhs.egg)
         }
         
         let firstIndexToAbandon = sortedNests.count - abandonCount
