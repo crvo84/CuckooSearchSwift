@@ -38,13 +38,14 @@ class CuckooSearchBrain {
       10-100 fast to find best, but far from optimum
      */
     
-    // Cuckoo search vars
+/*
     var nestCount = 10
     var cuckooCount = 10
-    var generationCount = 10000
+    var generationCount = 900
     var nestsToAbandonFraction = 0.5
     
-    static let productMaxValues: [Double] = [20, 20] // c/ product se multiplica por un precio
+    static let productPrices: [Double] = [20, 20] // c/ product se multiplica por un precio
+    static var maxTotal: Double = Double(UInt32.max)
     
     fileprivate static func utility(egg: Egg) -> Double {
         guard egg.values.count == productCount else {
@@ -62,6 +63,34 @@ class CuckooSearchBrain {
         let e = 100.0
         
         let utility = a + b + c + d + e
+        
+        return utility
+    }
+*/
+    
+    
+    var nestCount = 10
+    var cuckooCount = 10
+    var generationCount = 5000
+    var nestsToAbandonFraction = 0.5
+    
+    static let productPrices: [Double] = [1, 1, 1] // c/ product se multiplica por un precio
+    static var totalBudget: Double = 120 // total (sum of productCount * price)
+    
+    fileprivate static func utility(egg: Egg) -> Double {
+        guard egg.values.count == productCount else {
+            fatalError("Given Egg has no valid product count")
+        }
+        
+        /*
+         U(x,y,z) = 2xy +2xz +2yz
+         optimal(max): x = 40, y = 40, z = 40, U = 9,600
+         */
+
+        let x = egg.values[0]
+        let y = egg.values[1]
+        let z = egg.values[2]
+        let utility = 2*x*y + 2*x*z + 2*y*z
         
         return utility
     }
@@ -157,12 +186,18 @@ class CuckooSearchBrain {
     
     private static func generateRandomEgg() -> Egg {
         var values = [Double]()
-        for i in 0..<CuckooSearchBrain.productCount {
-            let upperBoundNotIncluded = UInt32(productMaxValues[i] + 1) // zero included
-            let value = Double(arc4random_uniform(upperBoundNotIncluded))
-            values.append(value)
-        }
+        var budgetLeft = totalBudget
         
+        let indexes = ShuffleManager.arrayOfShuffledIndexes(count: CuckooSearchBrain.productCount)
+        for index in 0..<indexes.count {
+            let budgetForProductUpperBoundNotIncluded = UInt32(budgetLeft + 1) // zero included
+            let budgetForProduct = Double(arc4random_uniform(budgetForProductUpperBoundNotIncluded))
+            let productPrice = productPrices[index]
+            let value = budgetForProduct/productPrice
+            budgetLeft -= value * productPrice
+            values.insert(value, at: index)
+        }
+
         return Egg(values: values)
     }
     

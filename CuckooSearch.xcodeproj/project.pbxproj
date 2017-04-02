@@ -13,6 +13,7 @@
 		735D979A1E7F0E7C0096C66A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 735D97991E7F0E7C0096C66A /* Assets.xcassets */; };
 		735D979D1E7F0E7C0096C66A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 735D979B1E7F0E7C0096C66A /* LaunchScreen.storyboard */; };
 		735D97A51E7F0EA70096C66A /* CuckooSearchBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735D97A41E7F0EA70096C66A /* CuckooSearchBrain.swift */; };
+		735D97CA1E81EF290096C66A /* ShuffleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735D97C91E81EF290096C66A /* ShuffleManager.swift */; };
 		F9B85BFC9AB15E4AB074F6C5 /* Pods_CuckooSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D080A374CC414F816809AE08 /* Pods_CuckooSearch.framework */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 		735D979C1E7F0E7C0096C66A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		735D979E1E7F0E7C0096C66A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		735D97A41E7F0EA70096C66A /* CuckooSearchBrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CuckooSearchBrain.swift; sourceTree = "<group>"; };
+		735D97C91E81EF290096C66A /* ShuffleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShuffleManager.swift; sourceTree = "<group>"; };
 		D080A374CC414F816809AE08 /* Pods_CuckooSearch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CuckooSearch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2147F3953A6E0268A70AEC4 /* Pods-CuckooSearch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CuckooSearch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CuckooSearch/Pods-CuckooSearch.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,6 +85,7 @@
 				735D97961E7F0E7C0096C66A /* Main.storyboard */,
 				735D97941E7F0E7C0096C66A /* ViewController.swift */,
 				735D97A41E7F0EA70096C66A /* CuckooSearchBrain.swift */,
+				735D97C91E81EF290096C66A /* ShuffleManager.swift */,
 				735D97A61E7F0EAD0096C66A /* Other Resources */,
 			);
 			path = CuckooSearch;
@@ -225,6 +228,7 @@
 			files = (
 				735D97951E7F0E7C0096C66A /* ViewController.swift in Sources */,
 				735D97A51E7F0EA70096C66A /* CuckooSearchBrain.swift in Sources */,
+				735D97CA1E81EF290096C66A /* ShuffleManager.swift in Sources */,
 				735D97931E7F0E7C0096C66A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
