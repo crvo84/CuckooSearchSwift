@@ -26,7 +26,7 @@ class CuckooSearchBrain {
     
     // Function vars
     static var productCount: Int {
-        return productMaxValues.count
+        return 2//return productMaxValues.count
     }
     
     /* ---------------------------------------------------------------- */
@@ -41,10 +41,30 @@ class CuckooSearchBrain {
     // Cuckoo search vars
     var nestCount = 10
     var cuckooCount = 10
-    var generationCount = 10000
+    var generationCount = 100
     var nestsToAbandonFraction = 0.5
     
-    static let productMaxValues: [Double] = [20, 20] // c/ product se multiplica por un precio
+    static let budget: Double = 4000
+    
+//    fileprivate static func utility(egg: Egg) -> Double {
+//        guard egg.values.count == productCount else {
+//            fatalError("Given Egg has no valid product count")
+//        }
+//        
+//        /*
+//         U(x,y) = -2x^2 +60x -3y^2 +72y +100
+//         optimal(max): x = 15, y = 12
+//         */
+//        let a = -2 * pow(egg.values[0], 2)
+//        let b = 60 * egg.values[0]
+//        let c = -3 * pow(egg.values[1], 2)
+//        let d = 72 * egg.values[1]
+//        let e = 100.0
+//        
+//        let utility = a + b + c + d + e
+//        
+//        return utility
+//    }
     
     fileprivate static func utility(egg: Egg) -> Double {
         guard egg.values.count == productCount else {
@@ -52,16 +72,13 @@ class CuckooSearchBrain {
         }
         
         /*
-         U(x,y) = -2x^2 +60x -3y^2 +72y +100
-         optimal(max): x = 15, y = 12
+         U(x,y) = x^(2/3) * y^(1/3)
+         optimal(max): x = 2600, y = 1400
          */
-        let a = -2 * pow(egg.values[0], 2)
-        let b = 60 * egg.values[0]
-        let c = -3 * pow(egg.values[1], 2)
-        let d = 72 * egg.values[1]
-        let e = 100.0
+        let a = pow(egg.values[0], 2/3)
+        let b = pow(egg.values[1], 1/3)
         
-        let utility = a + b + c + d + e
+        let utility = a * b
         
         return utility
     }
@@ -156,30 +173,28 @@ class CuckooSearchBrain {
     }
     
     private static func generateRandomEgg() -> Egg {
-        var values = [Double]()
-        for i in 0..<CuckooSearchBrain.productCount {
-            let upperBoundNotIncluded = UInt32(productMaxValues[i] + 1) // zero included
-            let value = Double(arc4random_uniform(upperBoundNotIncluded))
-            values.append(value)
-        }
+        let valueA = Double(arc4random_uniform(UInt32(budget + 1)))
         
-        return Egg(values: values)
+        let budgetLeft = budget - valueA
+        
+        let valueB = Double(arc4random_uniform(UInt32(budgetLeft + 1)))
+        
+        let randomIndex = arc4random_uniform(2)
+
+        return Egg(values: [randomIndex == 0 ? valueA : valueB, randomIndex == 0 ? valueB : valueA])
     }
     
     private static func generateStepSizeEgg(egg: Egg) -> Egg {
-        var valuesPlusStep = [Double]()
-        
-        for i in 0..<CuckooSearchBrain.productCount {
-            let step = getRandomStep()
-            
-            let oldValue = egg.values[i]
-            let oldValuePlusStep = productMaxValues[i] + step
-            let newValue = max(min(oldValuePlusStep, oldValue), 0.0)
-            
-            valuesPlusStep.append(newValue)
-        }
 
-        return Egg(values: valuesPlusStep)
+        let stepA = getRandomStep()
+        let valueA = min(egg.values[0] + stepA, budget)
+        
+        let budgetLeft = budget - valueA
+        
+        let stepB = getRandomStep()
+        let valueB = min(egg.values[1] + stepB, budgetLeft)
+
+        return Egg(values: [valueA, valueB])
     }
     
     private static func getRandomStep() -> Double {
